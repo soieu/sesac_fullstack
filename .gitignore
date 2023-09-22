@@ -1,1 +1,5 @@
 /.vscode
+/indiflex
+
+# Mac
+.DS_store

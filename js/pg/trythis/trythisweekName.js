@@ -8,7 +8,7 @@ const week = [
   "토요일",
 ];
 const today = new Date();
-const weeknum = today.getDay(); // 요일번호
+const weekNum = today.getDay(); // 요일번호
 
 console.log(today);
-console.log("오늘은 " + week[weeknum] + "입니다.");
+console.log("오늘은 " + week[weekNum] + "입니다.");

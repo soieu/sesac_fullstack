@@ -1,1 +1,1 @@
-hong
+"use strict";
