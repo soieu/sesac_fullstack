@@ -26,8 +26,15 @@ const makeArrayTco = (n, acc = []) => {
 console.log(makeArrayTco(10));
 
 const makeArrayTco2 = (n, acc = []) => {
-  if (n === 0) return acc;
+  if (n === 1) return [1, ...acc];
   return makeArrayTco2(n - 1, [n, ...acc]);
 };
 
 console.log(makeArrayTco2(10));
+
+// 재귀 답지
+function mA(n) {
+  if (n === 1) return [1];
+  return [...mA(n - 1), n];
+}
+console.log(mA(10));
