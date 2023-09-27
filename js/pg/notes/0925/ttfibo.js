@@ -28,7 +28,7 @@ console.log(fibonacci(8));
 console.log("================================");
 console.log(fibonacci(9));
 console.log("================================");
-console.log(fibonacci(10));
+console.log(fibonacci(1000));
 
 // 배열로 리턴 정답
 function fiboArr() {
