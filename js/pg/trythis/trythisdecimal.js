@@ -15,5 +15,6 @@ function addPoint(x, y) {
   const ey = y.toString().length - 2;
   const e = 10 ** (ex > ey ? ex : ey);
   return (x * e + y * e) / e;
+  ㅓ;
 }
 console.log((0.14 + 0.28).toFixed(2));
