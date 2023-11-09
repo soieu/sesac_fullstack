@@ -15,14 +15,13 @@ class Stack {
     return this.#arr;
   }
   [Symbol.iterator]() {
-    let idx = 0;
-
-    return {
-      next: () => {
-        idx++;
-        return { value: this.#arr[idx++], done: idx > this.#arr.length };
-      },
-    };
+    // let idx = 0;
+    // return {
+    //   next: () => {
+    //     return { value: this.#arr[idx++], done: idx > this.#arr.length };
+    //   },
+    // };
+    return this.#arr.values();
   }
 }
 
@@ -46,7 +45,7 @@ class Queue {
 
     return {
       next: () => {
-        return { value: this.#arr[idx++], done: !(idx <= max - 1) };
+        return { value: this.#arr[idx++], done: idx > this.#arr.length };
       },
     };
   }
