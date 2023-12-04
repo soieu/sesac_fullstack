@@ -1,55 +1,59 @@
 import { useState } from 'react';
+import Hello from './components/Hello.tsx';
+import My from './components/My.tsx';
 import './App.css';
-import Hello from './component/Hello';
+
+export type LoginUser = { id: number; name: string };
+export type Cart = { id: number; name: string; price: number };
+export type Session = {
+  loginUser: LoginUser | null;
+  cart: Cart[];
+};
+
+const SampleSession = {
+  // loginUser: null,
+  loginUser: { id: 1, name: 'Hong' },
+  cart: [
+    { id: 100, name: '라면', price: 3000 },
+    { id: 101, name: '컵라면', price: 2000 },
+    { id: 200, name: '파', price: 5000 },
+  ],
+};
 
 function App() {
   const [count, setCount] = useState(0);
-  const h1Style = { backgroundColor: 'red', color: 'white' };
-  let xage = 0; // 암의미업다.. 값 고정되어잇다..
-  const [age, setAge] = useState(0);
+  const [session, setSession] = useState<Session>(SampleSession);
+  console.log(session);
 
-  {
-    /* 대문자 시작은 컴포넌트를 의미 */
-  }
-  const Title = () => <h1 style={h1Style}>Vite + React</h1>;
+  const plusCount = () => setCount((prevCount) => prevCount + 1);
+  const login = (_id: number, _name: string) => {
+    if (_name === '') {
+      return alert('Please input name');
+    }
+    setSession({ ...session, loginUser: { id: _id, name: _name }, cart: [] });
+  };
+  const logout = () => {
+    setSession({ ...session, loginUser: null, cart: [] });
+  };
+  const removeCartItem = (_id: number) => {
+    setSession({
+      ...session,
+      cart: session.cart.filter((item) => item.id !== _id),
+    });
+  };
 
   return (
     <>
-      <Hello name='소영' age={age}>
-        {/* 이 Hello 태그 사이의 값은 children이 돼서 전달됨 */}
-        <strong>strong</strong>
+      <h2>count: {count}</h2>
+      <My
+        session={session}
+        login={login}
+        logout={logout}
+        removeCartItem={removeCartItem}
+      />
+      <Hello name='홍길동' age={30} plusCount={plusCount}>
+        <h3>반갑습니다~</h3>
       </Hello>
-      {/* 중괄호 안은 JS-code로 변경된다 */}
-      <Title />
-      <div className='card'>
-        <button
-          onClick={() => {
-            // 이거는 한번에 3오름
-            setCount((count) => count + 1);
-            setCount((count) => count + 1);
-            setCount((count) => count + 1);
-            // 이거는 한번에 1만 오름 (throttle)
-            // setCount(count + 1);
-            // setCount(count + 1);
-            // setCount(count + 1);
-            // if (count > 1) {
-            //   setCount(count + 5);
-            // }
-          }}
-        >
-          count is {count > 1 ? 'Big' : 'Zero'}
-          {count && count}{' '}
-          {/* 앞(count)가 false면 앞만 출력. 앞이 true면 뒷 부분도 실행되며 출력 */}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-        <button
-          onClick={() => {
-            setAge(age + 1);
-          }}
-        ></button>
-      </div>
     </>
   );
 }
