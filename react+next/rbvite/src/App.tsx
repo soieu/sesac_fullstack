@@ -1,7 +1,9 @@
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import Hello from './components/Hello.tsx';
 import My from './components/My.tsx';
 import './App.css';
+import { useCounter } from './hooks/counter-context.tsx';
+import { SessionContextProvider } from './hooks/session-context.tsx';
 
 export type LoginUser = { id: number; name: string };
 export type Cart = { id: number; name: string; price: number };
@@ -9,6 +11,7 @@ export type Session = {
   loginUser: LoginUser | null;
   cart: Cart[];
 };
+export type HandleProp = { fn: () => void };
 
 const SampleSession = {
   // loginUser: null,
@@ -21,37 +24,16 @@ const SampleSession = {
 };
 
 function App() {
-  const [count, setCount] = useState(0);
-  const [session, setSession] = useState<Session>(SampleSession);
-  console.log(session);
-
-  const plusCount = () => setCount((prevCount) => prevCount + 1);
-  const login = (_id: number, _name: string) => {
-    if (_name === '') {
-      return alert('Please input name');
-    }
-    setSession({ ...session, loginUser: { id: _id, name: _name }, cart: [] });
-  };
-  const logout = () => {
-    setSession({ ...session, loginUser: null, cart: [] });
-  };
-  const removeCartItem = (_id: number) => {
-    setSession({
-      ...session,
-      cart: session.cart.filter((item) => item.id !== _id),
-    });
-  };
+  const { count } = useCounter();
+  const loginHandleRef = useRef<HandleProp>(null);
 
   return (
     <>
       <h2>count: {count}</h2>
-      <My
-        session={session}
-        login={login}
-        logout={logout}
-        removeCartItem={removeCartItem}
-      />
-      <Hello name='홍길동' age={30} plusCount={plusCount}>
+      <SessionContextProvider>
+        <My loginHandleRef={loginHandleRef} />
+      </SessionContextProvider>
+      <Hello name='홍길동' age={30}>
         <h3>반갑습니다~</h3>
       </Hello>
     </>

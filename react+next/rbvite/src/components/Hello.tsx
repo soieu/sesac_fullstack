@@ -1,17 +1,13 @@
 import { PropsWithChildren } from 'react';
+import { useCounter } from '../hooks/counter-context';
 
 type Props = {
   name: string;
   age: number;
-  plusCount: () => void;
 };
 
-const Hello = ({
-  name,
-  age,
-  plusCount,
-  children,
-}: PropsWithChildren<Props>) => {
+const Hello = ({ name, age, children }: PropsWithChildren<Props>) => {
+  const { plusCount } = useCounter();
   return (
     <>
       <h1>
