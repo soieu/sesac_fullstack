@@ -19,7 +19,7 @@ const Login = forwardRef(({ login }: Props, handleRef) => {
   const [name, setName] = useState('');
   const nameRef = useRef<HTMLInputElement>(null);
   const idRef = useRef<HTMLInputElement>(null);
-  const loginHandleRef = useRef<HTMLInputElement>(null);
+  // const loginHandleRef = useRef<HTMLInputElement>(null);
 
   const changeId = (evt: ChangeEvent<HTMLInputElement>) =>
     setId(Number(evt.currentTarget.value));
@@ -35,10 +35,10 @@ const Login = forwardRef(({ login }: Props, handleRef) => {
     login(id, name);
   };
 
-  const focusNamehandler = {
+  const focusNameHandler = {
     fn: () => nameRef.current?.focus(),
   };
-  useImperativeHandle(handleRef, () => focusNamehandler);
+  useImperativeHandle(handleRef, () => focusNameHandler);
 
   useEffect(() => {
     if (idRef.current) idRef.current.value = '0';

@@ -1,11 +1,4 @@
-import {
-  Dispatch,
-  PropsWithChildren,
-  SetStateAction,
-  createContext,
-  useContext,
-  useState,
-} from 'react';
+import { PropsWithChildren, createContext, useContext, useState } from 'react';
 export type LoginUser = { id: number; name: string };
 export type Cart = { id: number; name: string; price: number };
 export type Session = {
@@ -20,25 +13,20 @@ type SessionContextProps = {
   removeCartItem: (_id: number) => void;
   saveCartItem: (name: string, price: number) => void;
 };
-const SampleSession = {
-  // loginUser: null,
-  loginUser: { id: 1, name: 'Hong' },
-  cart: [
-    { id: 100, name: '라면', price: 3000 },
-    { id: 101, name: '컵라면', price: 2000 },
-    { id: 200, name: '파', price: 5000 },
-  ],
+const DEFAULT_SESSION = {
+  loginUser: null,
+  cart: [],
 };
 const SessionContext = createContext<SessionContextProps>({
-  session: SampleSession,
-  login: (_id: number, _name: string) => {},
+  session: DEFAULT_SESSION,
+  login: () => {},
   logout: () => {},
-  removeCartItem: (_id: number) => {},
-  saveCartItem: (name: string, price: number) => {},
+  removeCartItem: () => {},
+  saveCartItem: () => {},
 });
 
 const SessionContextProvider = ({ children }: PropsWithChildren) => {
-  const [session, setSession] = useState<Session>(SampleSession);
+  const [session, setSession] = useState<Session>(DEFAULT_SESSION);
   const login = (_id: number, _name: string) => {
     if (_name === '') {
       return alert('Please input name');

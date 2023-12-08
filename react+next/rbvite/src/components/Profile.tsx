@@ -1,12 +1,14 @@
-import { LoginUser } from '../App';
 import { useSession } from '../hooks/session-context';
 
 const Profile = () => {
-  const { session, logout } = useSession();
+  const {
+    session: { loginUser },
+    logout,
+  } = useSession();
   console.log('@@@Profile');
   return (
     <>
-      <div>User Name: {session?.loginUser?.name}</div>
+      <div>User Name: {loginUser?.name}</div>
       <button onClick={logout}>Logout</button>
     </>
   );

@@ -1,11 +1,4 @@
-import {
-  Dispatch,
-  PropsWithChildren,
-  SetStateAction,
-  createContext,
-  useContext,
-  useState,
-} from 'react';
+import { PropsWithChildren, createContext, useContext, useState } from 'react';
 
 type CounterContextProps = {
   count: number;
