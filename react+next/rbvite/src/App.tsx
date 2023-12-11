@@ -29,13 +29,13 @@ function App() {
 
   return (
     <>
+      <Hello name='홍길동' age={30}>
+        <h3>반갑습니다~</h3>
+      </Hello>
       <h2>count: {count}</h2>
       <SessionContextProvider>
         <My loginHandleRef={loginHandleRef} />
       </SessionContextProvider>
-      <Hello name='홍길동' age={30}>
-        <h3>반갑습니다~</h3>
-      </Hello>
     </>
   );
 }

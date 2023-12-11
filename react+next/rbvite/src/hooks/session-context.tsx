@@ -11,7 +11,7 @@ type SessionContextProps = {
   login: (_id: number, _name: string) => void;
   logout: () => void;
   removeCartItem: (_id: number) => void;
-  saveCartItem: (name: string, price: number) => void;
+  saveCartItem: (id: number, name: string, price: number) => void;
 };
 const DEFAULT_SESSION = {
   loginUser: null,
@@ -42,16 +42,19 @@ const SessionContextProvider = ({ children }: PropsWithChildren) => {
       cart: session.cart.filter((item) => item.id !== _id),
     });
   };
-  const saveCartItem = (name: string, price: number) => {
-    const id =
-      session.cart
-        .map((cart) => cart.id)
-        .sort()
-        .at(-1) || 0;
-
+  const saveCartItem = (id: number, name: string, price: number) => {
+    const { cart } = session;
+    id = id || Math.max(...session.cart.map((cart) => cart.id), 0) + 1;
+    const item = cart.find((item) => item.id === id);
+    if (item) {
+      item.name = name;
+      item.price = price;
+    } else {
+      cart.push({ id, name, price });
+    }
     setSession({
       ...session,
-      cart: [...session.cart, { id: id + 1, name, price }],
+      cart: [...cart],
     });
   };
   return (
